@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* css for header */
+        .header {
+            padding: 5px;
+            background-color: rgb(22 141 176);
+            position: sticky;
+        }
+
+        .title {
+            width: auto;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            display: inline-flex;
+            margin-right: auto;
+        }
+
+        nav ul li {
+            display: inline-flex;
+            flex-direction: row;
+            padding: 4px 40px;
+            padding-left: 24px;
+            padding-right: 24px;
+            justify-content: flex-end;
+            margin-top: 6px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.89);
+            /* border: 2px solid yellow; */
+        }
+
+        .navigator {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            max-width: 1400px;
+            /* border: 2px solid red; */
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            margin: auto;
+            height: 42px;
+            max-width: 1400px;
+            justify-content: flex-end;
+            /* border: 4px solid brown; */
+            color: aliceblue;
+            background-color: rgb(17 141 177 / 86%);
+        }
+
+        #register {
+            border: 2px solid white;
+            padding: 5px 20px;
+            border-radius: 20px;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.878);
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: rgb(255, 255, 255)
+        }
+
+        #register:hover {
+            background-color: white;
+            color: rgba(20, 182, 79, 0.863);
+        }
+
+        /* css for main */
+        main {
+            min-height: 677px;
+        }
+        .box {
+            /* border: 2px solid blue; */
+            /* direction: flex;
+            flex-direction: row;
+            justify-content: center; */
+            height: 92.2vh;
+            padding-top: px;
+            background-color: white;
+        }
+
+        .login-form {
+            border: 1px solid black;
+            max-width: 244px;
+            margin: 0 auto;
+            margin-top: 152px;
+            padding: 20px;
+            background-color: rgb(255, 254, 254);
+            border-radius: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        label,
+        input {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            padding-left: 20px;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color:#2ec9d6;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-left: 80px;
+            margin-top: 36px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #095b79;
+        }
+
+        #block {
+            /* border: 2px solid black; */
+            padding: 10px;
+            margin: 20px;
+        }
+        #block p a{
+            text-decoration: none;
+            font-size: 12px;
+            color: red;
+        }
+        #block p{
+            text-decoration: none;
+            font-size: 12px;
+        }
+        /* css for footer */
+        .footer {
+            background-color: black;
+            color: white;
+        }
+
+        .list a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.849);
+            padding: 8px;
+            margin: 10px;
+            /* border: 2px solid white; */
+        }
+
+        .list a:hover {
+            color: white;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding: 30px 18px;
+            margin: 0px;
+            background-color: rgb(26, 25, 25);
+            /* border: 2px solid white; */
+        }
+
+        .copyright {
+            padding: 14px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="title">
+                <h1 style="color: rgb(223, 229, 232);">Vehicle Management System</h1>
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Services</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="box">
+            <div class="login-form">
+                <form action="/admin/control/login" method="post" id="form">
+                    <h1 style="margin-left: 80px;
+                    margin-top: -5px;">Login</h1>
+                    <div id="block">
+                        <label for="email" style=>Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+
+                        <label for="code">Code</label>
+                        <input type="password" id="code" name="code" placeholder="Admin code" required>
+                    </div>
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="social">
+            <div class="list">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Thread</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Copyright © 2023 Title. All rights reserved</p>
+        </div>
+    </footer>
+    
+</body>
+
+</html>
