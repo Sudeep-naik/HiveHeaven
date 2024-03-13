@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <style>
-        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-        }
-
+        /* css for header */
         .header {
             padding: 5px;
             background-color: rgb(22 141 176);
@@ -76,97 +69,101 @@
             color: rgba(20, 182, 79, 0.863);
         }
 
-        /* Main Content Styles */
-        main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 163px);
-            padding-top: 4px;
-            padding-bottom: 50px; /* Increased space between main and footer */
+        /* css for main */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
         }
 
-        .login-form {
-            background-color: #fff;
+        .main-container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
             border-radius: 10px;
+            background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 300px;
         }
 
-        .login-form h1 {
+        h1 {
             text-align: center;
             margin-bottom: 20px;
             color: #333;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 20px;
         }
 
-        .form-group label {
+        label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
             color: #555;
+            margin-left: 23px;
         }
 
-        .form-group input ,select {
-            width: 100%;
-            padding: 10px;
+        input[type="text"], input[type="tel"], input[type="email"], input[type="password"], select {
+            width: calc(92% - 14px);
+            padding: 9px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 10px;
             transition: border-color 0.3s;
         }
 
-        .form-group input:focus {
+        input[type="text"]:nth-child(odd),
+        input[type="tel"]:nth-child(odd),
+        input[type="email"]:nth-child(odd),
+        input[type="password"]:nth-child(odd),
+        select:nth-child(odd) {
+            margin-right: 20px;
+        }
+
+        input[type="text"]:nth-child(even),
+        input[type="tel"]:nth-child(even),
+        input[type="email"]:nth-child(even),
+        input[type="password"]:nth-child(even),
+        select:nth-child(even) {
+            margin-left: 20px;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus {
             outline: none;
             border-color: #2ecc71;
         }
 
-        .form-group input[type="submit"] {
-            background-color: #2ecc71;
-            color: #fff;
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
             border: none;
             border-radius: 5px;
+            background-color: #2ecc71;
+            color: #fff;
+            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        .form-group input[type="submit"]:hover {
+        input[type="submit"]:hover {
             background-color: #27ae60;
         }
 
-        .form-group a {
-            color: #333;
-            text-decoration: none;
-            margin-left: 5px;
-        }
-        .form-link {
-            display: flex;
-            justify-content: space-between;
-            margin-top: -16px;
-            font-size: 12px;
-            margin-bottom: 26px;
+        .form-group {
+            flex: 0 0 calc(50% - 40px);
+            margin-bottom: 20px;
         }
 
-        .form-link a {
-            text-decoration: underline;
-            color: #e91212;
-        }
-
-
-        /* Footer Styles */
+        /* css for footer */
         .footer {
             background-color: black;
             color: white;
-            padding: 20px 0;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 999;
-            margin-top: 50px; /* Increased space between header and footer */
         }
 
         .list a {
@@ -184,6 +181,8 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
+            padding: 30px 18px;
+            margin: 0px;
             background-color: rgb(26, 25, 25);
         }
 
@@ -195,12 +194,11 @@
         }
     </style>
 </head>
-
 <body>
     <header class="header">
         <div class="container">
             <div class="title">
-                <h1>Vehicle Management System</h1>
+                <h1 style="color: rgb(223, 229, 232);">Vehicle Management System</h1>
             </div>
             <nav class="navigation">
                 <ul>
@@ -212,42 +210,43 @@
             </nav>
         </div>
     </header>
+    <div class="main-container">
+        <h1>Register</h1>
+        <form action="/register" method="post">
+            <div class="form-group">
+                <label for="username">Name</label>
+                <input type="text" id="user_name" name="user_name" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Contact Number</label>
+                <input type="tel" id="phone_no" name="phone_no" placeholder="Enter your contact number" required>
+            </div>
+            <div class="form-group">
+                <label for="apartment_id">Apartment ID</label>
+                <select id="apartment_id" name="apartment_id" required >
+                    <option value="" disabled selected>Select Apartment ID</option>
 
-    <main>
-        <div class="login-form">
-            <form action="/admin/control/login" method="post" id="form">
-                <h1>Login</h1>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                </div>
-                <div class="form-group">
-                    <label for="apartment_id">Apartment ID</label>
-                    <select id="apartment_id" name="apartment_id" required>
-                        <option value="" disabled selected>Select Apartment ID</option>
-                        <option value="1">Apartment 1</option>
-                        <option value="2">Apartment 2</option>
-                        <option value="3">Apartment 3</option>
-                        <!-- Add more options as needed -->
-                    </select>
-                </div>
-                <div class="form-link"  >
-                    <a href="/register">New user ?</a>
-                    
-                    <a href="/forgot-password">Forgot Password</a>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Login">
-                </div>
-                
-            </form>
-        </div>
-    </main>
-
+                    {% for apartment in all_apartments %}
+                    <option value="{{ apartment.apartment_id }}">{{ apartment.apartment_id }}</option>
+                    {% endfor %}
+    
+                </select>                
+            </div>
+            <div class="form-group">
+                <label for="house_no">House/Room Number</label>
+                <input type="text" id="house_no" name="house_no" placeholder="Enter your house/room number" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="user_password" name="user_password" placeholder="Enter your password" required>
+            </div>
+            <input type="submit" value="Register">
+        </form>
+    </div>
     <footer class="footer">
         <div class="social">
             <div class="list">
@@ -261,7 +260,5 @@
             <p>Copyright © 2023 Title. All rights reserved</p>
         </div>
     </footer>
-
 </body>
-
 </html>

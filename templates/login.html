@@ -233,7 +233,7 @@
 
     <main>
         <div class="login-form">
-            <form action="/admin/control/login" method="post" id="form">
+            <form action="/login" method="post" id="form">
                 <h1>Login</h1>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -243,16 +243,16 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Password" required>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="apartment_id">Apartment ID</label>
                     <select id="apartment_id" name="apartment_id" required>
                         <option value="" disabled selected>Select Apartment ID</option>
                         <option value="1">Apartment 1</option>
                         <option value="2">Apartment 2</option>
                         <option value="3">Apartment 3</option>
-                        <!-- Add more options as needed -->
+
                     </select>
-                </div>
+                </div> -->
                 <div class="form-link">
                     <a href="/register">New user?</a>
                     <a href="/forgot-password">Forgot Password</a>
