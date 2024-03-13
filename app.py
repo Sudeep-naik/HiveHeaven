@@ -82,6 +82,10 @@ def register():
         email=request.form['email']
         user_password=request.form['user_password']
 
+        # user_exist=Users.query.filter_by(email=email).first()
+        # if user_exist:
+        #     return render_template()
+
         user=Users(user_name=user_name,phone_no=phone_no,apartment_id=apartment_id,house_no=house_no,email=email,user_password=user_password)
         db.session.add(user)
         db.session.commit()
