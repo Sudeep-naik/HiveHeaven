@@ -70,7 +70,7 @@ class NeighborComplaint(db.Model):
 # Routes for users
 @app.route('/')
 def index_page():
-    return render_template('home.html')
+    return render_template('index.html')
 
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -82,9 +82,10 @@ def register():
         email=request.form['email']
         user_password=request.form['user_password']
 
-        # user_exist=Users.query.filter_by(email=email).first()
-        # if user_exist:
-        #     return render_template()
+        user_exist=Users.query.filter_by(email=email).first()
+        if user_exist and user_exist.apartment_id==apartment_id:
+            error="User already exist please login"
+            return render_template('./register.html',error=error)
 
         user=Users(user_name=user_name,phone_no=phone_no,apartment_id=apartment_id,house_no=house_no,email=email,user_password=user_password)
         db.session.add(user)
@@ -116,8 +117,15 @@ def login():
 
 
 
-@app.route('/home')
+@app.route('/home',methods=['GET','POST'])
 def home(): 
+    if session['user_id']:
+        user_id=session['user_id']
+        user=Users.query.filter_by(user_id=user_id).first()
+        personal_complaints=NeighborComplaint.query.filter_by(user_id=user_id).all()
+        department_complaints=DepartmentComplaint.query.filter_by(user_id=user_id).all()
+        complaints_on_me=NeighborComplaint.query.filter_by(neighbor_user_id=user_id)
+        return render_template('/home.html',user=user,personal_complaints=personal_complaints,department_complaints=department_complaints,complaints_on_me=complaints_on_me)
     return render_template('/home.html')
 
 

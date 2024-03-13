@@ -261,9 +261,133 @@
             </nav>
         </div>
     </header>
-    
+
     <main>
         <h1 class="heading">Welcome to HiveHaven</h1>
+        <div class="my-details">
+            <h1>Personal Deatails</h1>
+        </div>
+        {% if user %}
+        <div class="details">
+            <p> User ID : {{ user.user_id}}</p>
+            <p> Name : {{ user.user_name }}</p>
+            <p> Phone Number : {{ user.phone_no }}</p>
+            <p> Apartmant ID : {{ user.apartment_id }}</p>
+            <p> Room/House Number : {{ user.house_no}}</p>
+            <p> Registerd Email : {{ user.email }}</p>
+        </div>
+        {% endif %}
+
+        <div class="mycomplaint">
+            <h1>Complaints</h1>
+            <div class="personal-complaint">
+                {% if personal_complaints|length == 0 %}
+                <h2>NO complaints yet</h2>
+                {% else %}
+                <h2>Personal Complaints</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Complaint ID</th>
+                            <th>Complaint On</th>
+                            <th>Subject</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaint in personal_complaints %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ complaint.id }}</td>
+                            <td>{{ complaint.neighbor_user_id }}</td>
+                            <td>{{ complaint.subject }}</td>
+                            <td>{{ complaint.description }}</td>
+                            {% if complaint.status==0 %}
+                            <td>Pending</td>
+                            {% else %}
+                            <td>Resolved</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+            <div class="department-complaint">
+                <h2>Department Complaint</h2>
+                {% if department_complaints|length == 0 %}
+                <h2>NO complaints yet</h2>
+                {% else %}
+                <h2>Complaints On Departments</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Complaint ID</th>
+                            <th>Complaint On</th>
+                            <th>Subject</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaint in department_complaints %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ complaint.id }}</td>
+                            <td>{{ complaint.department_id }}</td>
+                            <td>{{ complaint.subject }}</td>
+                            <td>{{ complaint.description }}</td>
+                            {% if complaint.status==0 %}
+                            <td>Pending</td>
+                            {% else %}
+                            <td>Resolved</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+        </div>
+        <div class="complaints-on-me">
+            <h1>Complaints on me</h1>
+            {% if complaints_on_me.count() == 0 %}
+            <h2>NO complaints yet</h2>
+            {% else %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Complaint BY</th>
+                        <th>Subject</th>
+                        <th>Description</th>
+                        <th>Date Time</th>
+                        <th>Status</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for complaint in department_complaints %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ complaint.id }}</td>
+                        <td>{{ complaint.user_id }}</td>
+                        <td>{{ complaint.subject }}</td>
+                        <td>{{ complaint.description }}</td>
+                        {% if complaint.status==0 %}
+                        <td>Pending</td>
+                        {% else %}
+                        <td>Resolved</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
     </main>
 
     <footer class="footer">

@@ -67,4 +67,5 @@ INSERT INTO apartment (apartment_id, apartment_name, address, city, state) VALUE
 ('APT004', 'Sunset Heights', '89 Rajaji Nagar', 'Chennai', 'Tamil Nadu');
 
 
-select * from apartments;
+select * from users;
+select * from Apartment;
