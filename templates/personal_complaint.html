@@ -1,0 +1,264 @@
+new neighbour page :-<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neighbor Complaint</title>
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        position: relative;
+      }
+
+      /* Header Styles */
+      .header {
+        padding: 5px;
+        background-color: rgb(22 141 176);
+        position: sticky;
+        top: 0;
+        z-index: 999;
+      }
+
+      .title {
+        width: auto;
+        font-weight: bold;
+        font-family: "Times New Roman", Times, serif;
+        display: inline-flex;
+        margin-right: auto;
+      }
+
+      nav ul li {
+        display: inline-flex;
+        flex-direction: row;
+        padding: 4px 40px;
+        padding-left: 24px;
+        padding-right: 24px;
+        justify-content: flex-end;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.89);
+        margin-top: 6px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        height: 42px;
+        max-width: 1400px;
+        justify-content: flex-end;
+        color: aliceblue;
+        background-color: rgb(17 141 177 / 86%);
+      }
+
+      #register {
+        border: 2px solid white;
+        padding: 5px 20px;
+        border-radius: 20px;
+      }
+
+      nav a {
+        color: rgba(255, 255, 255, 0.878);
+        text-decoration: none;
+      }
+
+      nav a:hover {
+        color: rgb(255, 255, 255);
+      }
+
+      #register:hover {
+        background-color: white;
+        color: rgba(20, 182, 79, 0.863);
+      }
+
+      /* Main Content Styles */
+      .main-container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        min-height: calc(100vh - 200px);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        padding: 0 20px;
+        margin-bottom: 50px; /* Added margin bottom */
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #555;
+        margin-left: 23px;
+      }
+
+      input[type="text"],
+      input[type="tel"],
+      input[type="email"],
+      input[type="password"],
+      select,
+      textarea {
+        width: calc(100% - 14px);
+        padding: 9px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        transition: border-color 0.3s;
+      }
+
+      input[type="submit"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #2ecc71;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      /* Footer Styles */
+      .footer {
+        background-color: black;
+        color: white;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Added z-index */
+      }
+
+      .list a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.849);
+        padding: 8px;
+        margin: 10px;
+      }
+
+      .list a:hover {
+        color: white;
+      }
+
+      .social {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 30px 18px;
+        margin: 0px;
+        background-color: rgb(26, 25, 25);
+      }
+
+      .copyright {
+        padding: 14px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      /* Adjusting footer position */
+      body {
+        padding-bottom: 100px; /* Added padding bottom equal to footer height */
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="title">
+          <h1>Vehicle Management System</h1>
+        </div>
+        <nav class="navigation">
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Services</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="main-container">
+      <h1>Neighbor Complaint</h1>
+      <form action="/submit_neighbor_complaint" method="post">
+        <div class="form-group">
+          <label for="user_id">User ID</label>
+          <input
+            type="text"
+            id="user_id"
+            name="user_id"
+            placeholder="Enter your user ID"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="neighbor_user_id">Neighbor's User ID</label>
+          <input
+            type="text"
+            id="neighbor_user_id"
+            name="neighbor_user_id"
+            placeholder="Enter neighbor's user ID"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            placeholder="Enter subject"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Enter description"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Submit Complaint" />
+        </div>
+      </form>
+    </div>
+    <footer class="footer">
+      <div class="social">
+        <div class="list">
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>
+          <a href="#">Thread</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>Copyright © 2023 Title. All rights reserved</p>
+      </div>
+    </footer>
+  </body>
+</html>
