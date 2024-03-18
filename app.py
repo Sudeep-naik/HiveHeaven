@@ -6,11 +6,12 @@ app = Flask(__name__)
 
 # MySQL Configuration choose your port no and password this is a dummy thing i have set up
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/HiveHaven'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 app.secret_key="secret"
 
+app.config['SQLALCHEMY_ECHO'] = True
 
 
 class Apartment(db.Model):
@@ -72,6 +73,7 @@ class NeighborComplaint(db.Model):
 def index_page():
     return render_template('index.html')
 
+
 @app.route('/register',methods=['GET','POST'])
 def register():
     if request.method=='POST':
@@ -86,11 +88,13 @@ def register():
         if user_exist and user_exist.apartment_id==apartment_id:
             error="User already exist please login"
             return render_template('./register.html',error=error)
+        else:
+            user=Users(user_name=user_name,phone_no=phone_no,apartment_id=apartment_id,house_no=house_no,email=email,user_password=user_password)
+            db.session.add(user)
+            db.session.commit()
+            sucess="Registered Sucessfull Please Login"
+            return render_template('./register.html',sucess=sucess)
 
-        user=Users(user_name=user_name,phone_no=phone_no,apartment_id=apartment_id,house_no=house_no,email=email,user_password=user_password)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for("login"))
     all_apartments=Apartment.query.all()
     return render_template('./register.html',all_apartments=all_apartments)
 
@@ -115,20 +119,32 @@ def login():
     return render_template('/login.html')
 
 
-
-
 @app.route('/home',methods=['GET','POST'])
 def home(): 
     if session['user_id']:
         user_id=session['user_id']
         user=Users.query.filter_by(user_id=user_id).first()
-        personal_complaints=NeighborComplaint.query.filter_by(user_id=user_id).all()
-        department_complaints=DepartmentComplaint.query.filter_by(user_id=user_id).all()
-        complaints_on_me=NeighborComplaint.query.filter_by(neighbor_user_id=user_id)
+        personal_complaints = NeighborComplaint.query.filter_by(user_id=user_id).all()
+        department_complaints = DepartmentComplaint.query.filter_by(user_id=11).all()
+        complaints_on_me = NeighborComplaint.query.filter_by(neighbor_user_id=11).all()
+        print(user)
+        print("Personal Complaints:", personal_complaints)
+        print("Department Complaints:", department_complaints)
+        print("Complaints On Me:", complaints_on_me)
         return render_template('/home.html',user=user,personal_complaints=personal_complaints,department_complaints=department_complaints,complaints_on_me=complaints_on_me)
     return render_template('/home.html')
 
+@app.route('/personal_complaint', methods=['GET','POST'])
+def personal_complaint():
+    return render_template("/personal_complaint.html")
 
+@app.route('/department_complaint', methods=['GET','POST'])
+def department_complaint():
+    return render_template("/department_complaint.html")
+
+
+
+        
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

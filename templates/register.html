@@ -250,7 +250,11 @@
                 {{ error }}
             </div>
             {% endif %}
-
+            {% if sucess|length != 0 %}
+            <div class="alert" style="color: red;">
+                {{ sucess }}
+            </div>
+            {% endif %}
             <input type="submit" value="Register">
         </form>
     </div>

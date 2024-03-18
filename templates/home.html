@@ -95,117 +95,37 @@
 
         /* css for main */
         main {
-            min-height: 677px;
+            min-height: 100%;
+            background-color: #f8fffe
         }
 
         h1 {
-            color: #3d3939;
+            color: #221f1f;
         }
+        .personal{
+            margin: 20px;
 
-        .comp {
-            margin-top: 20px;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            table-layout: fixed;
-        }
-
-
-        th:nth-child(1),
-        td:nth-child(1),
-        th:nth-child(2),
-        td:nth-child(2),
-        th:nth-child(4),
-        td:nth-child(4),
-        th:nth-child(5),
-        td:nth-child(5) {
-            width: 38px;
-            /* Set the width of the "Sl. No" and "Vehicle ID" columns */
-        }
-
         .heading {
-            margin-left: 488px;
-            margin-top: 35px;
-            font-size: 43px;
-            font-style: revert;
-            margin-bottom: 37px;
+            justify-content: center;
+            display: flex;
+            flex-direction: row;
+            font-size: 26px;
+            padding-top: 30px 
         }
-
-        .comp {
-            margin-top: 20px;
-            margin-bottom: 164px;
-            margin-left: 72px;
-            margin-right: 72px;
+        .box {
+            margin: 40px;
+            padding: 40px;
+            background-color: #ebfff4;;
+            border-radius: 12px;
         }
-
-
-        th:nth-child(3),
-        td:nth-child(3) {
-            width: 200px;
-            /* Set the width of the "Complaint" column */
+        .details{
+            padding: 10px;
+            
         }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+        .department-complaint{
+            margin-top: 30px;
         }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            font-size: 20px;
-            color: #3c5557;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 8px 12px;
-            background-color: #4CAF50;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-right: 8px;
-            margin-left: 6px;
-        }
-
-        .delete-button {
-            display: inline-block;
-            padding: 8px 12px;
-            background-color: #f44336;
-            /* Set the background color to red */
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .delete-button:hover {
-            background-color: #d32f2f;
-            /* Darker red on hover */
-        }
-
-        .button:hover {
-            background-color: #45a049;
-        }
-
-        /*alert box*/
-        .alert {
-            padding: 20px;
-            background-color: #00913e;
-            /* Red */
-            color: white;
-            margin-bottom: 15px;
-        }
-
-
         /* css for footer */
         .footer {
             background-color: black;
@@ -240,6 +160,34 @@
             flex-direction: row;
             justify-content: center;
         }
+        /* trail and error*/
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        }
+
+        /* Table header styles */
+        th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        }
+
+        /* Alternating row colors */
+        tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+        }
+
+        /* Hover effect on rows */
+        tbody tr:hover {
+        background-color: #ddd;
+        }
+        
     </style>
 </head>
 
@@ -263,28 +211,52 @@
     </header>
 
     <main>
-        <h1 class="heading">Welcome to HiveHaven</h1>
-        <div class="my-details">
-            <h1>Personal Deatails</h1>
+        <div class="heading">
+             <h1>Welcome to HiveHaven</h1>
         </div>
-        {% if user %}
-        <div class="details">
-            <p> User ID : {{ user.user_id}}</p>
-            <p> Name : {{ user.user_name }}</p>
-            <p> Phone Number : {{ user.phone_no }}</p>
-            <p> Apartmant ID : {{ user.apartment_id }}</p>
-            <p> Room/House Number : {{ user.house_no}}</p>
-            <p> Registerd Email : {{ user.email }}</p>
+        <div class="personal box">
+            <div class="Sub-heading">
+                <h1>Personal Details</h1>
+            </div>
+            <div class="details">
+                {% if user %}
+                <div class="detail-item">
+                    <span>User ID:</span>
+                    <span>{{ user.user_id }}</span>
+                </div>
+                <div class="detail-item">
+                    <span>Name:</span>
+                    <span>{{ user.user_name }}</span>
+                </div>
+                <div class="detail-item">
+                    <span>Phone Number:</span>
+                    <span>{{ user.phone_no }}</span>
+                </div>
+                <div class="detail-item">
+                    <span>Apartmant ID:</span>
+                    <span>{{ user.apartment_id }}</span>
+                </div>
+                <div class="detail-item">
+                    <span>Room/House Number:</span>
+                    <span>{{ user.house_no }}</span>
+                </div>
+                <div class="detail-item">
+                    <span>Registered Email:</span>
+                    <span>{{ user.email }}</span>
+                </div>
+                {% endif %}
+            </div>
         </div>
-        {% endif %}
-
-        <div class="mycomplaint">
-            <h1>Complaints</h1>
+        <div class="mycomplaint box">
+            <div class="Sub-heading">
+                <h1>Registered Complaints</h1>
+            </div>
+           
             <div class="personal-complaint">
-                {% if personal_complaints|length == 0 %}
-                <h2>NO complaints yet</h2>
-                {% else %}
                 <h2>Personal Complaints</h2>
+                {% if personal_complaints|length == 0 %}
+                <div class="alert-message">No Complaints Registered</div>
+                {% else %}
                 <table>
                     <thead>
                         <tr>
@@ -317,8 +289,8 @@
             </div>
             <div class="department-complaint">
                 <h2>Department Complaint</h2>
-                {% if department_complaints|length == 0 %}
-                <h2>NO complaints yet</h2>
+                {% if department_complaints %}
+                <div class="alert-message">No Complaints Registered</div>
                 {% else %}
                 <h2>Complaints On Departments</h2>
                 <table>
@@ -352,10 +324,13 @@
                 {% endif %}
             </div>
         </div>
-        <div class="complaints-on-me">
-            <h1>Complaints on me</h1>
-            {% if complaints_on_me.count() == 0 %}
-            <h2>NO complaints yet</h2>
+        <div class="complaints-on-me box">
+            <div class="Sub-heading">
+                <h1>Complaints On Me</h1>
+            </div>
+            
+            {% if complaints_on_me %}
+            <div class="alert-message">No Complaints Registered</div>
             {% else %}
             <table>
                 <thead>
