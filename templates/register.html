@@ -247,12 +247,12 @@
             </div>
             {% if error|length !=0 %} 
             <div class="alert" style="color: red;">
-                {{ error }}
+                {{ error }} <a href="./login">Login</a>
             </div>
             {% endif %}
             {% if sucess|length != 0 %}
             <div class="alert" style="color: red;">
-                {{ sucess }}
+                {{ sucess }}<a href="./login">Login</a>
             </div>
             {% endif %}
             <input type="submit" value="Register">

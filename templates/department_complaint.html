@@ -144,7 +144,7 @@
         .footer {
             background-color: black;
             color: white;
-            position: fixed;
+            position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
@@ -203,7 +203,7 @@
 <div class="main-container">
     <h1>Department Complaint</h1>
     <form action="/submit_department_complaint" method="post">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="user_id">User ID</label>
             <input
                     type="text"
@@ -212,16 +212,17 @@
                     placeholder="Enter your user ID"
                     required
             />
-        </div>
+        </div> -->
         <div class="form-group">
             <label for="department_id">Department ID</label>
-            <input
-                    type="text"
-                    id="department_id"
-                    name="department_id"
-                    placeholder="Enter department ID"
-                    required
-            />
+            <select id="department_id" name="department_id" required >
+                <option value="" disabled selected>Select Apartment ID</option>
+
+                {% for department in all_department %}
+                <option value="{{ department.dep_id }}">{{ department.department_name }}</option>
+                {% endfor %}
+
+            </select> 
         </div>
         <div class="form-group">
             <label for="subject">Subject</label>

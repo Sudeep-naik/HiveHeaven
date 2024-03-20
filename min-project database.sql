@@ -1,5 +1,6 @@
 create database HiveHaven;
 -- Create Users table
+drop database HiveHaven;
 use HiveHaven;
 -- Table: apartment
 CREATE TABLE IF NOT EXISTS Apartment (
@@ -13,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Apartment (
 
 -- Table: user
 CREATE TABLE IF NOT EXISTS Users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id varchar(100) PRIMARY KEY,
     user_name VARCHAR(100) NOT NULL,
     phone_no varchar(40),
 	apartment_id varchar(100),
@@ -56,11 +57,9 @@ CREATE TABLE IF NOT EXISTS NeighborComplaint (
     subject VARCHAR(255) NOT NULL,
     description VARCHAR(800),
     status int DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id),
-    FOREIGN KEY (neighbor_user_id) REFERENCES Users(user_id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-drop table neighbor_complaint;
+drop table neighborcomplaint;
 
 INSERT INTO apartment (apartment_id, apartment_name, address, city, state) VALUES
 ('APT001', 'Royal Residency', '34 Park Street', 'Kolkata', 'West Bengal'),

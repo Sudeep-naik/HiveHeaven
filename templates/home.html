@@ -126,6 +126,58 @@
         .department-complaint{
             margin-top: 30px;
         }
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        }
+
+        /* Table header styles */
+        th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        }
+
+        /* Alternating row colors */
+        tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+        }
+
+        /* Hover effect on rows */
+        tbody tr:hover {
+        background-color: #ddd;
+        }
+        .complaint-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .complaint-button:hover {
+            background-color: darkgreen;
+        }
+
+        .complaint-bar{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+
+
+
         /* css for footer */
         .footer {
             background-color: black;
@@ -161,32 +213,7 @@
             justify-content: center;
         }
         /* trail and error*/
-        table {
-        width: 100%;
-        border-collapse: collapse;
-        }
-
-        th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        }
-
-        /* Table header styles */
-        th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-        }
-
-        /* Alternating row colors */
-        tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-        }
-
-        /* Hover effect on rows */
-        tbody tr:hover {
-        background-color: #ddd;
-        }
+       
         
     </style>
 </head>
@@ -248,12 +275,16 @@
             </div>
         </div>
         <div class="mycomplaint box">
-            <div class="Sub-heading">
+            <div class="Sub-heading ">
                 <h1>Registered Complaints</h1>
             </div>
            
             <div class="personal-complaint">
-                <h2>Personal Complaints</h2>
+                <div class="complaint-bar">
+                    <h2>Personal Complaints</h2>
+                    <a class="complaint-button" href="/personal_complaint{{ user.user_id }}">Complaint</a>
+                </div>
+                
                 {% if personal_complaints|length == 0 %}
                 <div class="alert-message">No Complaints Registered</div>
                 {% else %}
@@ -288,8 +319,11 @@
                 {% endif %}
             </div>
             <div class="department-complaint">
-                <h2>Department Complaint</h2>
-                {% if department_complaints %}
+                <div class="complaint-bar">
+                    <h2>Department Complaint</h2>
+                    <a class="complaint-button" href="/department_complaint{{ user.user_id }}">Complaint</a>
+                </div>
+                {% if department_complaints|length == 0 %}
                 <div class="alert-message">No Complaints Registered</div>
                 {% else %}
                 <h2>Complaints On Departments</h2>

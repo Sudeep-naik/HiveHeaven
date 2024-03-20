@@ -1,4 +1,4 @@
-new neighbour page :-<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -144,7 +144,7 @@ new neighbour page :-<!DOCTYPE html>
       .footer {
         background-color: black;
         color: white;
-        position: fixed;
+        position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
@@ -188,7 +188,7 @@ new neighbour page :-<!DOCTYPE html>
     <header class="header">
       <div class="container">
         <div class="title">
-          <h1>Vehicle Management System</h1>
+          <h1>HiveHaven</h1>
         </div>
         <nav class="navigation">
           <ul>
@@ -202,8 +202,8 @@ new neighbour page :-<!DOCTYPE html>
     </header>
     <div class="main-container">
       <h1>Neighbor Complaint</h1>
-      <form action="/submit_neighbor_complaint" method="post">
-        <div class="form-group">
+      <form action="/personal_complaint" method="post">
+        <!-- <div class="form-group">
           <label for="user_id">User ID</label>
           <input
             type="text"
@@ -212,16 +212,17 @@ new neighbour page :-<!DOCTYPE html>
             placeholder="Enter your user ID"
             required
           />
-        </div>
+        </div> -->
         <div class="form-group">
           <label for="neighbor_user_id">Neighbor's User ID</label>
-          <input
-            type="text"
-            id="neighbor_user_id"
-            name="neighbor_user_id"
-            placeholder="Enter neighbor's user ID"
-            required
-          />
+          <select id="department_id" name="neighbor_user_id" required >
+            <option value="" disabled selected>Select User ID</option>
+
+            {% for user in all_user %}
+            <option value="{{ user.user_id }}">{{ user.user_id }}</option>
+            {% endfor %}
+
+        </select> 
         </div>
         <div class="form-group">
           <label for="subject">Subject</label>
