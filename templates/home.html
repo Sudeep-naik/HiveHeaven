@@ -231,7 +231,7 @@
                     <li><a href="#">Contact Us</a></li>
                     <li><a href="#">Services</a></li>
                     <li><a href="/admin/control/inspect">Inspect</a></li>
-                    <li><button><a href="/admin/control/logout">Logout</a></button></li>
+                    <li><button><a href="/logout">Logout</a></button></li>
                 </ul>
             </nav>
         </div>
@@ -282,7 +282,7 @@
             <div class="personal-complaint">
                 <div class="complaint-bar">
                     <h2>Personal Complaints</h2>
-                    <a class="complaint-button" href="/personal_complaint{{ user.user_id }}">Complaint</a>
+                    <a class="complaint-button" href="/personal_complaint">Complaint</a>
                 </div>
                 
                 {% if personal_complaints|length == 0 %}
@@ -308,9 +308,9 @@
                             <td>{{ complaint.subject }}</td>
                             <td>{{ complaint.description }}</td>
                             {% if complaint.status==0 %}
-                            <td>Pending</td>
+                            <td style="color: red;">Pending</td>
                             {% else %}
-                            <td>Resolved</td>
+                            <td style="color: green;">Resolved</td>
                             {% endif %}
                         </tr>
                         {% endfor %}
@@ -321,7 +321,7 @@
             <div class="department-complaint">
                 <div class="complaint-bar">
                     <h2>Department Complaint</h2>
-                    <a class="complaint-button" href="/department_complaint{{ user.user_id }}">Complaint</a>
+                    <a class="complaint-button" href="/department_complaint">Complaint</a>
                 </div>
                 {% if department_complaints|length == 0 %}
                 <div class="alert-message">No Complaints Registered</div>
@@ -332,7 +332,7 @@
                         <tr>
                             <th>Sl No</th>
                             <th>Complaint ID</th>
-                            <th>Complaint On</th>
+                             <th>Department_id</th>
                             <th>Subject</th>
                             <th>Description</th>
                             <th>Status</th>
@@ -363,7 +363,7 @@
                 <h1>Complaints On Me</h1>
             </div>
             
-            {% if complaints_on_me %}
+            {% if complaints_on_me|length==0 %}
             <div class="alert-message">No Complaints Registered</div>
             {% else %}
             <table>
@@ -373,23 +373,21 @@
                         <th>Complaint BY</th>
                         <th>Subject</th>
                         <th>Description</th>
-                        <th>Date Time</th>
                         <th>Status</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    {% for complaint in department_complaints %}
+                    {% for complaint in complaints_on_me %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>{{ complaint.id }}</td>
                         <td>{{ complaint.user_id }}</td>
                         <td>{{ complaint.subject }}</td>
                         <td>{{ complaint.description }}</td>
                         {% if complaint.status==0 %}
-                        <td>Pending</td>
+                        <td style="color: red;">Pending</td>
                         {% else %}
-                        <td>Resolved</td>
+                        <td style="color: green;">Resolved</td>
                         {% endif %}
                     </tr>
                     {% endfor %}

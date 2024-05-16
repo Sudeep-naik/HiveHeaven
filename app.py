@@ -99,7 +99,7 @@ def register():
             user=Users(user_id=user_id,user_name=user_name,phone_no=phone_no,apartment_id=apartment_id,house_no=house_no,email=email,user_password=user_password)
             db.session.add(user)
             db.session.commit() 
-            sucess="Registered Sucessfull Please"
+            sucess="Registered Sucessfull Please login"
             return render_template('./register.html',sucess=sucess,all_apartments=all_apartments)
 
     
@@ -133,26 +133,53 @@ def home():
         user_id=session['user_id']
         user=Users.query.filter_by(user_id=user_id).first()
         personal_complaints = NeighborComplaint.query.filter_by(user_id=user_id).all()
-        department_complaints = DepartmentComplaint.query.filter_by(user_id=11).all()
-        complaints_on_me = NeighborComplaint.query.filter_by(neighbor_user_id=11).all()
-        print(user)
+        department_complaints = DepartmentComplaint.query.filter_by(user_id=user_id).all()
+        complaints_on_me = NeighborComplaint.query.filter_by(neighbor_user_id=user_id).all()
+        # print(user)
+        # print(complaints_on_me )
         # print("Personal Complaints:", personal_complaints)
         # print("Department Complaints:", department_complaints)
         # print("Complaints On Me:", complaints_on_me)
         return render_template('/home.html',user=user,personal_complaints=personal_complaints,department_complaints=department_complaints,complaints_on_me=complaints_on_me)
     return render_template('/home.html')
 
-@app.route('/personal_complaint<string:user_id>', methods=['GET','POST'])
-def personal_complaint(user_id):
+@app.route('/personal_complaint', methods=['GET','POST'])
+def personal_complaint():
+    user_id=session['user_id']
     apartment_id=session['apartment_id']
     all_user=Users.query.filter_by(apartment_id=apartment_id).all()
-    print(all_user)
-    return render_template("/personal_complaint.html",all_user=all_user)
+    if request.method=='POST':
+        neighbor_user_id=request.form['neighbor_user_id']
+        subject=request.form['subject']
+        description=request.form['description']
+        
+        complaint=NeighborComplaint(user_id=user_id,neighbor_user_id=neighbor_user_id,subject=subject,description=description)
+        db.session.add(complaint)
+        db.session.commit()
 
-@app.route('/department_complaint<string:user_id>', methods=['GET','POST'])
-def department_complaint(user_id,apartment_id):
+        sucess="Complainent registered Sucessfully"
+        return redirect(url_for('personal_complaint'))
+    return render_template("./personal_complaint.html",all_user=all_user)
+
+
+@app.route('/department_complaint', methods=['GET','POST'])
+def department_complaint():
+    user_id=session['user_id']
+    apartment_id=session['apartment_id']
     all_department=Department.query.filter_by(apartment_id=apartment_id).all()
+    
+    if request.method=='POST':
+        department_id=request.form['department_id']
+        subject=request.form['subject']
+        description=request.form['description']
+
+        complaint=DepartmentComplaint(user_id=user_id,department_id=department_id,subject=subject,description=description)
+        db.session.add(complaint)
+        db.session.commit()
+        print("done")
+        return redirect(url_for('department_complaint'))
     return render_template("/department_complaint.html",all_department=all_department)
+
 
 #admin routes for the appartment
 app.route('/admin/login',methods=['GET','POST'])
@@ -163,15 +190,12 @@ app.route('/admin/login/home',methods=['GET','POST'])
 def admin_home():
     return
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template('index.html')
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True,port=3000)
-
-
-
-
-
-
-
-
