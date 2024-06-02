@@ -347,9 +347,9 @@
                             <td>{{ complaint.subject }}</td>
                             <td>{{ complaint.description }}</td>
                             {% if complaint.status==0 %}
-                            <td>Pending</td>
+                            <td style="color: red;">Pending</td>
                             {% else %}
-                            <td>Resolved</td>
+                            <td style="color: green;">Resolved</td>
                             {% endif %}
                         </tr>
                         {% endfor %}

@@ -22,6 +22,7 @@ class Apartment(db.Model):
     city = db.Column(db.String(100))
     state = db.Column(db.String(100))
 
+
 class Users(db.Model):
     user_id = db.Column(db.String(100), primary_key=True)
     user_name = db.Column(db.String(100), nullable=False)
@@ -42,7 +43,26 @@ class Users(db.Model):
     
     def check_password(self,user_password):
         return bcrypt.checkpw(user_password.encode('utf-8'),self.user_password.encode('utf-8'))
-        
+
+
+class Admin(db.Model):
+    admin_id = db.Column(db.String(100), primary_key=True)
+    admin_name = db.Column(db.String(100), nullable=False)
+    apartment_id = db.Column(db.String(100), db.ForeignKey('apartment.apartment_id'))
+    email = db.Column(db.String(255), nullable=False)
+    admin_password = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, admin_id, admin_name, apartment_id, email, admin_password):
+        self.admin_id = admin_id
+        self.admin_name = admin_name
+        self.apartment_id = apartment_id
+        self.email = email
+        self.admin_password = bcrypt.hashpw(admin_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    def check_password(self, admin_password):
+        return bcrypt.checkpw(admin_password.encode('utf-8'), self.admin_password.encode('utf-8'))
+
+
 class Department(db.Model):
     apartment_id = db.Column(db.String(100), db.ForeignKey('apartment.apartment_id'), primary_key=True)
     dep_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -184,7 +204,7 @@ def department_complaint():
 #admin routes for the appartment
 app.route('/admin/login',methods=['GET','POST'])
 def admin_login():
-    return
+    return 
 
 app.route('/admin/login/home',methods=['GET','POST'])
 def admin_home():
