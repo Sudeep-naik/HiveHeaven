@@ -1,12 +1,13 @@
-from flask import Flask, request,render_template, redirect,session,url_for
+from flask import Flask, flash, jsonify, request,render_template, redirect,session,url_for
 from flask_sqlalchemy import SQLAlchemy
 import bcrypt
 from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import sessionmaker
+import stripe
 app = Flask(__name__)
 
 # MySQL Configuration choose your port no and password this is a dummy thing i have set up
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/HiveHaven'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root%4014@localhost/web_project'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
@@ -179,7 +180,7 @@ def personal_complaint():
 
         sucess="Complainent registered Sucessfully"
         return redirect(url_for('personal_complaint'))
-    return render_template("./personal_complaint.html",all_user=all_user)
+    return render_template("./personal_complaint.html",all_user=all_user,user_id=user_id)
 
 
 @app.route('/department_complaint', methods=['GET','POST'])
@@ -200,6 +201,11 @@ def department_complaint():
         return redirect(url_for('department_complaint'))
     return render_template("/department_complaint.html",all_department=all_department)
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template('index.html')
+
 
 #admin routes for the appartment
 app.route('/admin/login',methods=['GET','POST'])
@@ -210,10 +216,90 @@ app.route('/admin/login/home',methods=['GET','POST'])
 def admin_home():
     return
 
-@app.route('/logout')
-def logout():
-    session.clear()
-    return render_template('index.html')
+
+
+#provider routes
+public_key="pk_test_51PNeFpP65uOQnXwlT6Mscw8mNhequpRd7yIDQRCenPWCnyR7ZqVmmPFzLnqnEdbCdz0Nmb2hdge8pUJ8s6Laevcy00EsVjvCvO"
+stripe.api_key="sk_test_51PNeFpP65uOQnXwl0Fv0dEH33o2GN1IVmbePHZ0ImGutSXax3YZHPmZI3f4W6VlvaRMxzgv4eJVkOdWlfN0HQ3iq00Uhkhcnzd"
+
+@app.route('/add_apartment', methods=['POST', 'GET'])
+def add_apartment():
+    if request.method == 'POST':
+        apartment_name = request.form['apartment_name']
+        address = request.form['address']
+        city = request.form['city']
+        state = request.form['state']
+
+        # try:
+            # CUSTOMER INFO
+        customer = stripe.Customer.create(
+            email=request.form['stripeEmail'],
+            source=request.form['stripeToken']
+        )
+
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount=1999,  # 19.99
+            currency='usd',
+            description='Donation'
+        )
+
+        apartment=Apartment(apartment_name=apartment_name,address=address,city=city,state=state)
+        db.session.add(apartment)
+        db.session.commit()
+        return redirect(url_for('register_admin',apartment_id=apartment.apartment_id))
+        # except stripe.error.StripeError as e:
+        #     # The Stripe API returned an error.
+        #     # You can examine the error's type and message to handle different kinds of errors.
+        #     flash(f"Stripe Error: {e}")
+        #     return redirect(url_for('error'))
+        # except KeyError as e:
+        #     # The required form data was missing.
+        #     flash(f"Missing form data: {e}")
+        #     return redirect(url_for('error'))
+        # except Exception as e:
+        #     # Some other error occurred.
+        #     flash(f"Unexpected Error: {e}")
+        #     return redirect(url_for('error'))
+
+    return render_template('add_apartment.html',public_key=public_key)
+
+
+
+@app.route('/register_admin', methods=['GET', 'POST'])
+def register_admin():
+    apartment_id = request.args.get('apartment_id')
+    all_apartments = Apartment.query.all()
+    if request.method == 'POST':
+        admin_name = request.form['admin_name']
+        apartment_id = request.form['apartment_id']
+        email = request.form['email']
+        admin_password = request.form['admin_password']
+        admin_id = apartment_id + "-admin"
+
+        try:
+            admin_exist = Admin.query.filter_by(admin_id=admin_id).first()
+        except exc.SQLAlchemyError as e:
+            return render_template('./register_admin.html', error=str(e), all_apartments=all_apartments)
+
+        if admin_exist:
+            error = "Admin already exists for this apartment"
+            return render_template('./register_admin.html', error=error, all_apartments=all_apartments)
+        else:
+            admin = Admin(admin_id=admin_id, admin_name=admin_name, apartment_id=apartment_id, email=email, admin_password=admin_password)
+            db.session.add(admin)
+            db.session.commit()
+            success = "Admin registered successfully"
+            return redirect(url_for('admin_login'))
+
+    return render_template('./register_admin.html', all_apartments=all_apartments, selected_apartment_id=apartment_id)
+
+
+@app.route('/provider/home')
+def provider_home():
+    all_apartments=Apartment.query.all()
+    return render_template('provider_home.html',all_apartments=all_apartments)
+
 
 if __name__ == '__main__':
     with app.app_context():

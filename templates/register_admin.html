@@ -4,14 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Provider Home</title>
+    <title>Login</title>
     <style>
+        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        /* css for header */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        /* Header Styles */
         .header {
             padding: 5px;
             background-color: rgb(22 141 176);
@@ -36,6 +44,7 @@
             font-weight: bold;
             color: rgba(255, 255, 255, 0.89);
             margin-top: 8px;
+            /* border: 2px solid yellow; */
         }
 
         nav ul li button {
@@ -50,11 +59,13 @@
             color: black;
         }
 
+
         .navigator {
             display: flex;
             flex-wrap: nowrap;
             flex-direction: column;
             max-width: 1400px;
+            /* border: 2px solid red; */
             justify-content: center;
         }
 
@@ -65,6 +76,7 @@
             height: 42px;
             max-width: 1400px;
             justify-content: flex-end;
+            /* border: 4px solid brown; */
             color: aliceblue;
             background-color: rgb(17 141 177 / 86%);
         }
@@ -89,63 +101,85 @@
             color: rgba(20, 182, 79, 0.863);
         }
 
-        /* css for main */
+        /* Main Content Styles */
         main {
-            min-height: 100%;
-            background-color: #f8fffe;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
             padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
         }
 
-        h1 {
-            color: #221f1f;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
+        /* Styles for the form labels */
+        form label {
+            display: block;
             font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
+        /* Styles for the form inputs */
+        form input, form select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
 
-        tbody tr:hover {
-            background-color: #ddd;
-        }
-
-        .register-button {
-            padding: 6px 12px;
+        /* Styles for the submit button */
+        form button {
+            width: 100%;
+            padding: 10px;
             background-color: #168db0;
-            color: white;
+            color: #fff;
             border: none;
-            border-radius: 4px;
-            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .register-button:hover {
-            background-color: #125a70;
+        /* Hover effect for the submit button */
+        form button:hover {
+            background-color: #126a8b;
         }
 
-        /* css for footer */
+        /* Responsive design for smaller screens */
+        @media (max-width: 600px) {
+            form {
+                padding: 15px;
+            }
+
+            form input, form select {
+                width: calc(100% - 20px);
+            }
+        }
+        /* Footer Styles */
         .footer {
             background-color: black;
             color: white;
-            position: absolute;
+            padding: 20px 0;
+            text-align: center;
             bottom: 0;
-            width: 100%;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .social {
+            display: flex;
+            justify-content: center;
+            background-color: rgb(26, 25, 25);
+            padding: 10px 0;
         }
 
         .list a {
@@ -159,20 +193,8 @@
             color: white;
         }
 
-        .social {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            padding: 30px 18px;
-            margin: 0px;
-            background-color: rgb(26, 25, 25);
-        }
-
         .copyright {
             padding: 14px;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
         }
     </style>
 </head>
@@ -181,48 +203,45 @@
     <header class="header">
         <div class="container">
             <div class="title">
-                <h1 style="color: rgb(223, 229, 232);">HiveHaven</h1>
+                <h1>HiveHaven</h1>
             </div>
             <nav class="navigation">
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Add Apartment</a></li>
+                    <li><a href="#">About</a></li>
                     <li><a href="#">Contact Us</a></li>
                     <li><a href="#">Services</a></li>
-                    <li><a href="/admin/control/inspect">Inspect</a></li>
-                    <li><button><a href="/logout">Logout</a></button></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
-        <h1>Provider Home</h1>
-        <h2>All Apartments</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Apartment Name</th>
-                    <th>Address</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+        <h1>Register Admin for Apartment</h1>
+        {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+        {% if success %}
+            <p style="color:green;">{{ success }}</p>
+        {% endif %}
+        <form method="POST">
+            <label for="admin_name">Admin Name:</label>
+            <input type="text" name="admin_name" required><br>
+            <label for="apartment_id">Apartment:</label>
+            <select name="apartment_id" required>
                 {% for apartment in all_apartments %}
-                <tr>
-                    <td>{{ apartment.apartment_name }}</td>
-                    <td>{{ apartment.address }}</td>
-                    <td>{{ apartment.city }}</td>
-                    <td>{{ apartment.state }}</td>
-                    <td>
-                        <a href="{{ url_for('register_admin', apartment_id=apartment.apartment_id) }}" class="register-button">Register Admin</a>
-                    </td>
-                </tr>
+                    <option value="{{ apartment.apartment_id }}" {% if selected_apartment_id == apartment.apartment_id %}selected{% endif %}>
+                        {{ apartment.apartment_name }}
+                    </option>
                 {% endfor %}
-            </tbody>
-        </table>
+            </select><br>
+            <label for="email">Email:</label>
+            <input type="email" name="email" required><br>
+            <label for="admin_password">Password:</label>
+            <input type="password" name="admin_password" required><br>
+            <button type="submit">Register Admin</button>
+        </form>
     </main>
+
 
     <footer class="footer">
         <div class="social">
@@ -233,11 +252,11 @@
                 <a href="#">Instagram</a>
             </div>
         </div>
-
         <div class="copyright">
             <p>Copyright © 2023 Title. All rights reserved</p>
         </div>
     </footer>
+
 </body>
 
 </html>
