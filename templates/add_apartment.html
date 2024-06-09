@@ -36,7 +36,6 @@
             font-weight: bold;
             color: rgba(255, 255, 255, 0.89);
             margin-top: 8px;
-            /* border: 2px solid yellow; */
         }
 
         nav ul li button {
@@ -47,17 +46,15 @@
             border-width: 0px;
         }
 
-        nav ul li button :hover {
+        nav ul li button:hover {
             color: black;
         }
-
 
         .navigator {
             display: flex;
             flex-wrap: nowrap;
             flex-direction: column;
             max-width: 1400px;
-            /* border: 2px solid red; */
             justify-content: center;
         }
 
@@ -68,7 +65,6 @@
             height: 42px;
             max-width: 1400px;
             justify-content: flex-end;
-            /* border: 4px solid brown; */
             color: aliceblue;
             background-color: rgb(17 141 177 / 86%);
         }
@@ -95,88 +91,57 @@
 
         /* css for main */
         main {
-            min-height: 100%;
-            background-color: #f8fffe
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+            padding: 20px;
         }
 
         h1 {
-            color: #221f1f;
-        }
-        .personal{
-            margin: 20px;
-
-        }
-        .heading {
-            justify-content: center;
-            display: flex;
-            flex-direction: row;
-            font-size: 26px;
-            padding-top: 30px 
-        }
-        .box {
-            margin: 40px;
-            padding: 40px;
-            background-color: #ebfff4;;
-            border-radius: 12px;
-        }
-        .details{
-            padding: 10px;
-            
-        }
-        .department-complaint{
-            margin-top: 30px;
-        }
-        table {
-        width: 100%;
-        border-collapse: collapse;
-        }
-
-        th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        }
-
-        /* Table header styles */
-        th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-        }
-
-        /* Alternating row colors */
-        tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-        }
-
-        /* Hover effect on rows */
-        tbody tr:hover {
-        background-color: #ddd;
-        }
-        .complaint-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: green;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
             text-align: center;
-            text-decoration: none;
+            color: #333;
+            margin-bottom: 20px;
         }
 
-        .complaint-button:hover {
-            background-color: darkgreen;
-        }
-
-        .complaint-bar{
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
         }
-        
 
+        label {
+            margin-top: 10px;
+            color: #555;
+            font-weight: bold;
+        }
 
+        input[type="text"] {
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .stripe-button-el {
+            margin-top: 20px;
+        }
+
+        .stripe-button-el span {
+            background-color: #6772e5 !important;
+            padding: 10px 20px !important;
+            border-radius: 5px !important;
+        }
 
         /* css for footer */
         .footer {
@@ -189,7 +154,6 @@
             color: rgba(255, 255, 255, 0.849);
             padding: 8px;
             margin: 10px;
-            /* border: 2px solid white; */
         }
 
         .list a:hover {
@@ -203,7 +167,6 @@
             padding: 30px 18px;
             margin: 0px;
             background-color: rgb(26, 25, 25);
-            /* border: 2px solid white; */
         }
 
         .copyright {
@@ -212,9 +175,6 @@
             flex-direction: row;
             justify-content: center;
         }
-        /* trail and error*/
-       
-        
     </style>
 </head>
 
@@ -237,30 +197,28 @@
         </div>
     </header>
     <main>
-        <h1>Register Apartment</h1>
         <form id="apartment-form" action="{{url_for('add_apartment')}}" method="POST">
+            <h1>Register Apartment</h1>
             <label for="apartment_name">Apartment Name:</label>
-            <input type="text" name="apartment_name" required><br>
+            <input type="text" name="apartment_name" required>
             <label for="address">Address:</label>
-            <input type="text" name="address" required><br>
+            <input type="text" name="address" required>
             <label for="city">City:</label>
-            <input type="text" name="city" required><br>
+            <input type="text" name="city" required>
             <label for="state">State:</label>
-            <input type="text" name="state" required><br>
-            <!-- <button type="submit" id="pay-button">Register and Pay</button> -->
+            <input type="text" name="state" required>
 
             <script
             src='https://checkout.stripe.com/checkout.js'
             class='stripe-button'
-            data-key={{public_key}}
+            data-key="{{public_key}}"
             data-amount='1999'
-            data-name='Puppy Adoption'
-            data-description='Donation'
+            data-name='Apartment Registration'
+            data-description='Register your apartment'
             data-locale='auto'
             data-zip-code='true'>
             </script>
         </form>
-
     </main>
     <footer class="footer">
         <div class="social">
@@ -271,11 +229,9 @@
                 <a href="#">Instagram</a>
             </div>
         </div>
-
         <div class="copyright">
             <p>Copyright © 2023 Title. All rights reserved</p>
         </div>
-
     </footer>
 </body>
 

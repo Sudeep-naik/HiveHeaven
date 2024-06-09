@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unresolved Personal Complaints</title>
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        position: relative;
+        padding-bottom: 100px; /* Added padding bottom equal to footer height */
+      }
+
+      /* Header Styles */
+      .header {
+        padding: 5px;
+        background-color: rgb(22 141 176);
+        position: sticky;
+        top: 0;
+        z-index: 999;
+      }
+
+      .title {
+        width: auto;
+        font-weight: bold;
+        font-family: "Times New Roman", Times, serif;
+        display: inline-flex;
+        margin-right: auto;
+      }
+
+      nav ul li {
+        display: inline-flex;
+        flex-direction: row;
+        padding: 4px 40px;
+        padding-left: 24px;
+        padding-right: 24px;
+        justify-content: flex-end;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.89);
+        margin-top: 6px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        height: 42px;
+        max-width: 1400px;
+        justify-content: flex-end;
+        color: aliceblue;
+        background-color: rgb(17 141 177 / 86%);
+      }
+
+      #register {
+        border: 2px solid white;
+        padding: 5px 20px;
+        border-radius: 20px;
+      }
+
+      nav a {
+        color: rgba(255, 255, 255, 0.878);
+        text-decoration: none;
+      }
+
+      nav a:hover {
+        color: rgb(255, 255, 255);
+      }
+
+      #register:hover {
+        background-color: white;
+        color: rgba(20, 182, 79, 0.863);
+      }
+
+      /* Main Content Styles */
+      .main-container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        min-height: calc(100vh - 200px);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tbody tr:hover {
+        background-color: #ddd;
+      }
+
+      .resolve-button {
+        padding: 5px 10px;
+        background-color: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .resolve-button:hover {
+        background-color: darkgreen;
+      }
+
+      /* Footer Styles */
+      .footer {
+        background-color: black;
+        color: white;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999; /* Added z-index */
+      }
+
+      .list a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.849);
+        padding: 8px;
+        margin: 10px;
+      }
+
+      .list a:hover {
+        color: white;
+      }
+
+      .social {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 30px 18px;
+        margin: 0px;
+        background-color: rgb(26, 25, 25);
+      }
+
+      .copyright {
+        padding: 14px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+    </style>
+</head>
+<body>
+    <header class="header">
+      <div class="container">
+        <div class="title">
+          <h1>HiveHaven</h1>
+        </div>
+        <nav class="navigation">
+          <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Services</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    
+    <div class="main-container">
+        <h1>Unresolved Personal Complaints</h1>
+        {% if complaints %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Neighbor User ID</th>
+                    <th>Subject</th>
+                    <th>Description</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint.id }}</td>
+                    <td>{{ complaint.user_id }}</td>
+                    <td>{{ complaint.neighbor_user_id }}</td>
+                    <td>{{ complaint.subject }}</td>
+                    <td>{{ complaint.description }}</td>
+                    <td>{{ complaint.created_at }}</td>
+                    <td>
+                        <form action="{{ url_for('resolve_department_complaint',complaint_id=complaint.id) }}" method="POST">
+                            <button type="submit" class="resolve-button">Resolve</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No unresolved complaints.</p>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+      <div class="social">
+        <div class="list">
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>
+          <a href="#">Thread</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>Copyright © 2023 Title. All rights reserved</p>
+      </div>
+    </footer>
+</body>
+</html>

@@ -70,9 +70,11 @@
         }
 
         /* css for main */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
         }
 
         .main-container {
@@ -211,6 +213,7 @@
             </nav>
         </div>
     </header>
+    <main>
     <div class="main-container">
         <h1>Register</h1>
         <form action="/register" method="post">
@@ -258,6 +261,7 @@
             <input type="submit" value="Register">
         </form>
     </div>
+   </main>
     <footer class="footer">
         <div class="social">
             <div class="list">

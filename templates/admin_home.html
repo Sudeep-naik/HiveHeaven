@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* css for header */
+        .header {
+            padding: 5px;
+            background-color: rgb(22 141 176);
+            position: relative;
+            top: 0px;
+            z-index: 1000;
+        }
+
+        .title {
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            display: inline-flex;
+            margin-right: auto;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        nav ul li {
+            padding: 10px 20px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.89);
+        }
+
+        nav ul li button {
+            border-radius: 10%;
+            font-weight: bold;
+            background: #168db0;
+            padding: 3px;
+            border-width: 0px;
+        }
+
+        nav ul li button:hover {
+            color: black;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: auto;
+            color: aliceblue;
+            background-color: rgb(17 141 177 / 86%);
+        }
+
+        #register {
+            border: 2px solid white;
+            padding: 5px 20px;
+            border-radius: 20px;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.878);
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: rgb(255, 255, 255);
+        }
+
+        #register:hover {
+            background-color: white;
+            color: rgba(20, 182, 79, 0.863);
+        }
+
+        /* css for main */
+        main {
+            min-height: 100%;
+            background-color: #f8fffe;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            min-height: calc(100vh - 200px);
+        }
+
+        h1 {
+            color: #221f1f;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .box {
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #ebfff4;
+            border-radius: 12px;
+            max-width: 1200px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .heading {
+            justify-content: center;
+            display: flex;
+            flex-direction: row;
+            font-size: 26px;
+            padding-top: 30px;
+        }
+
+        .details {
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        .complaint-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .complaint-button:hover {
+            background-color: rgb(1, 9, 80);
+        }
+
+        .complaint-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .complaint-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .complaint-buttons button {
+            padding: 10px 20px;
+            background-color: #17a959;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .complaint-buttons button:hover {
+            background-color: #056e3d;
+        }
+
+        .no-users {
+            text-align: center;
+            font-size: 18px;
+            margin: 52px;
+            color: #888;
+        }
+
+        /* css for footer */
+        .footer {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .social {
+            display: flex;
+            justify-content: center;
+            background-color: rgb(26, 25, 25);
+            padding: 10px 0;
+        }
+
+        .list a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.849);
+            padding: 8px;
+            margin: 10px;
+        }
+
+        .list a:hover {
+            color: white;
+        }
+
+        .copyright {
+            padding: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="title">
+                <h1 style="color: rgb(223, 229, 232);">HiveHaven</h1>
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Inspect</a></li>
+                    <li><button><a href="/logout">Logout</a></button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <main>
+            <h1>Welcome Admmin</h1>
+            <div class="complaint-buttons">
+                <button onclick="location.href='/admin/personal_complaints'">Personal Complaint</button>
+                <button onclick="location.href='/admin/department_complaints'">Department Complaints</button>
+                <button onclick="location.href='/admin/add_department'">Add Department</button>
+            </div>
+
+            {% if users %}
+            <h2>All Users in the Apartment</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Name</th>
+                        <th>Phone No</th>
+                        <th>House No</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.user_id }}</td>
+                        <td>{{ user.user_name }}</td>
+                        <td>{{ user.phone_no }}</td>
+                        <td>{{ user.house_no }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="no-users">No users found in the apartment.</p>
+            {% endif %}
+        </main>
+    </main>
+    <footer class="footer">
+        <div class="social">
+            <div class="list">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Thread</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Copyright © 2023 Title. All rights reserved</p>
+        </div>
+    </footer>
+</body>
+</html>

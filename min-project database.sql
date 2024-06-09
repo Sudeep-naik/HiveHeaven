@@ -74,3 +74,12 @@ VALUES
 ('APT0008', 'Parkside Residences', '6060 Park Ave', 'Gurgaon', 'Haryana'),
 ('APT0009', 'Sunset Villas', '7070 Sunset Blvd', 'Goa', 'Goa');
 
+INSERT INTO Department (apartment_id, department_name, email) VALUES
+('APT0001', 'Maintenance', 'maintenance@example.com'),
+('APT0001', 'Plumbing', 'plumbing@example.com'),
+('APT0001', 'Electrical', 'electrical@example.com');
+
+
+select *from users;
+delete from users where user_id="APT0001-103";
+select * from Admin;

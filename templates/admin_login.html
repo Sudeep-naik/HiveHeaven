@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Admin</title>
+    <title>Login</title>
     <style>
         /* Global Styles */
         * {
@@ -44,6 +44,7 @@
             font-weight: bold;
             color: rgba(255, 255, 255, 0.89);
             margin-top: 8px;
+            /* border: 2px solid yellow; */
         }
 
         nav ul li button {
@@ -54,15 +55,17 @@
             border-width: 0px;
         }
 
-        nav ul li button:hover {
+        nav ul li button :hover {
             color: black;
         }
+
 
         .navigator {
             display: flex;
             flex-wrap: nowrap;
             flex-direction: column;
             max-width: 1400px;
+            /* border: 2px solid red; */
             justify-content: center;
         }
 
@@ -73,6 +76,7 @@
             height: 42px;
             max-width: 1400px;
             justify-content: flex-end;
+            /* border: 4px solid brown; */
             color: aliceblue;
             background-color: rgb(17 141 177 / 86%);
         }
@@ -103,70 +107,75 @@
             justify-content: center;
             align-items: center;
             min-height: calc(100vh - 200px);
-            padding: 20px;
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        form {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
+        .login-form {
+            background-color: #fff;
             border-radius: 10px;
-            background-color: #f9f9f9;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            margin-top: 145px;
+            margin-bottom: 118px;
         }
 
-        /* Styles for the form labels */
-        form label {
+        .login-form h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
             display: block;
-            font-weight: bold;
             margin-bottom: 5px;
+            color: #555;
         }
 
-        /* Styles for the form inputs and select */
-        form input, form select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-
-        /* Styles for the submit button */
-        form button {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 10px;
-            background-color: #168db0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2ecc71;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #2ecc71;
             color: #fff;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
         }
 
-        /* Hover effect for the submit button */
-        form button:hover {
-            background-color: #126a8b;
+        .form-group input[type="submit"]:hover {
+            background-color: #27ae60;
         }
 
-        /* Responsive design for smaller screens */
-        @media (max-width: 600px) {
-            form {
-                padding: 15px;
-            }
+        .form-link {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -16px;
+            font-size: 12px;
+            margin-bottom: 26px;
+            text-align: left;
+        }
 
-            form input, form select {
-                width: calc(100% - 20px);
-            }
+        .form-link a {
+            text-decoration: underline;
+            color: #e91212;
         }
 
         /* Footer Styles */
@@ -209,7 +218,7 @@
     <header class="header">
         <div class="container">
             <div class="title">
-                <h1 style="color: rgb(223, 229, 232);">HiveHaven</h1>
+                <h1>HiveHaven</h1>
             </div>
             <nav class="navigation">
                 <ul>
@@ -221,32 +230,29 @@
             </nav>
         </div>
     </header>
+
     <main>
-        <form method="POST" action="{{url_for('register_admin')}}">
-            <h1>Register Admin for Apartment</h1>
-            {% if error %}
-                <p style="color:red;">{{ error }}</p>
-            {% endif %}
-            {% if success %}
-                <p style="color:green;">{{ success }}</p>
-            {% endif %}
-            <label for="admin_name">Admin Name:</label>
-            <input type="text" name="admin_name" required>
-            <label for="apartment_id">Apartment:</label>
-            <select name="apartment_id" required>
-                {% for apartment in all_apartments %}
-                    <option value="{{ apartment.apartment_id }}" {% if selected_apartment_id == apartment.apartment_id %}selected{% endif %}>
-                        {{ apartment.apartment_name }}
-                    </option>
-                {% endfor %}
-            </select>
-            <label for="email">Email:</label>
-            <input type="email" name="email" required>
-            <label for="admin_password">Password:</label>
-            <input type="password" name="admin_password" required>
-            <button type="submit">Register Admin</button>
-        </form>
+        <div class="login-form">
+            <form action="/admin/login" method="post" id="form">
+                <h1> Admin Login</h1>
+                <div class="form-group">
+                    <label for="email">Admin_id</label>
+                    <input type="text" id="email" name="admin_id" placeholder="Enter your id" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-link">
+                    <a href="/forgot_password">Forgot Password</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+        </div>
     </main>
+
     <footer class="footer">
         <div class="social">
             <div class="list">
@@ -260,6 +266,7 @@
             <p>Copyright © 2023 Title. All rights reserved</p>
         </div>
     </footer>
+
 </body>
 
 </html>

@@ -199,6 +199,7 @@ def department_complaint():
         db.session.commit()
         print("done")
         return redirect(url_for('department_complaint'))
+    
     return render_template("/department_complaint.html",all_department=all_department)
 
 @app.route('/logout')
@@ -208,19 +209,87 @@ def logout():
 
 
 #admin routes for the appartment
-app.route('/admin/login',methods=['GET','POST'])
+@app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
-    return 
+    if request.method == 'POST':
+        admin_id = request.form['admin_id']
+        password = request.form['password']
+        admin = Admin.query.filter_by(admin_id=admin_id).first()
 
-app.route('/admin/login/home',methods=['GET','POST'])
+        if admin and admin.check_password(password):  
+            session['admin_id'] = admin_id
+            session['admin_apartment_id']=admin.apartment_id
+            return redirect(url_for("admin_home"))
+        else:
+            error = "Incorrect Admin ID or Password"
+            return render_template('admin_login.html', error=error)
+
+    return render_template('admin_login.html')
+
+
+@app.route('/admin/login/home',methods=['GET','POST'])
 def admin_home():
-    return
+    if 'admin_id' in session:
+        apartment_id = session['admin_apartment_id']
+        users = Users.query.filter_by(apartment_id=apartment_id).all()
+        return render_template('admin_home.html', users=users)
+    return render_template("admin_home.html")
 
+
+@app.route('/admin/personal_complaints',methods=['GET','POST'])
+def personal_complaints():
+    if 'admin_id' not in session:
+        return redirect(url_for('admin_login'))
+    
+    apartment_id = session['admin_apartment_id']
+    unresolved_complaints = db.session.query(NeighborComplaint).join(
+        Users, NeighborComplaint.user_id == Users.user_id
+    ).filter(
+        NeighborComplaint.status == 0,
+        Users.apartment_id == apartment_id
+    ).all()
+    
+    return render_template('show_personal_complaints.html', complaints=unresolved_complaints)
+
+@app.route('/admin/resolve_complaint/<int:complaint_id>', methods=['POST'])
+def resolve_complaint(complaint_id):
+    if 'admin_id' not in session:
+        return redirect(url_for('admin_login'))
+    
+    complaint = NeighborComplaint.query.get(complaint_id)
+    if complaint:
+        complaint.status = 1  # Update status to resolved
+        db.session.commit()
+    
+    return redirect(url_for('personal_complaints'))
+
+
+@app.route('/admin/department_complaints', methods=['GET'])
+def view_department_complaints():
+    if 'admin_id' in session:
+        apartment_id = session.get('apartment_id')
+        unresolved_complaints = (db.session.query(DepartmentComplaint)
+                                 .join(Users, DepartmentComplaint.user_id == Users.user_id)
+                                 .filter(Users.apartment_id == apartment_id, DepartmentComplaint.status == 0)
+                                 .all())
+        return render_template('show_department_complaints.html', complaints=unresolved_complaints)
+    return redirect(url_for('admin_login'))
+
+
+@app.route('/admin/resolve_department_complaint/<int:complaint_id>', methods=['POST'])
+def resolve_department_complaint(complaint_id):
+    complaint = DepartmentComplaint.query.get(complaint_id)
+    if complaint:
+        complaint.status = 1
+        db.session.commit()
+    return redirect(url_for('view_department_complaints'))
 
 
 #provider routes
 public_key="pk_test_51PNeFpP65uOQnXwlT6Mscw8mNhequpRd7yIDQRCenPWCnyR7ZqVmmPFzLnqnEdbCdz0Nmb2hdge8pUJ8s6Laevcy00EsVjvCvO"
 stripe.api_key="sk_test_51PNeFpP65uOQnXwl0Fv0dEH33o2GN1IVmbePHZ0ImGutSXax3YZHPmZI3f4W6VlvaRMxzgv4eJVkOdWlfN0HQ3iq00Uhkhcnzd"
+
+
 
 @app.route('/add_apartment', methods=['POST', 'GET'])
 def add_apartment():
@@ -243,11 +312,14 @@ def add_apartment():
             currency='usd',
             description='Donation'
         )
+        record_count = db.session.query(Apartment).count()
+        apartment_id="APT00"+str(record_count+1)
 
-        apartment=Apartment(apartment_name=apartment_name,address=address,city=city,state=state)
+        apartment=Apartment(apartment_id=apartment_id,apartment_name=apartment_name,address=address,city=city,state=state)
         db.session.add(apartment)
         db.session.commit()
-        return redirect(url_for('register_admin',apartment_id=apartment.apartment_id))
+        sucess="Apartment Registered Sucessfully"
+        return redirect(url_for('register_admin',apartment_id=apartment.apartment_id,sucess=sucess))
         # except stripe.error.StripeError as e:
         #     # The Stripe API returned an error.
         #     # You can examine the error's type and message to handle different kinds of errors.
@@ -290,7 +362,7 @@ def register_admin():
             db.session.add(admin)
             db.session.commit()
             success = "Admin registered successfully"
-            return redirect(url_for('admin_login'))
+            return render_template("admin_login.html")
 
     return render_template('./register_admin.html', all_apartments=all_apartments, selected_apartment_id=apartment_id)
 
