@@ -15,7 +15,6 @@ app.secret_key="secret"
 
 app.config['SQLALCHEMY_ECHO'] = True
 
-
 class Apartment(db.Model):
     apartment_id = db.Column(db.String(100), primary_key=True)
     apartment_name = db.Column(db.String(255), nullable=False)
@@ -267,7 +266,7 @@ def resolve_complaint(complaint_id):
 @app.route('/admin/department_complaints', methods=['GET'])
 def view_department_complaints():
     if 'admin_id' in session:
-        apartment_id = session.get('apartment_id')
+        apartment_id = session.get('admin_apartment_id')
         unresolved_complaints = (db.session.query(DepartmentComplaint)
                                  .join(Users, DepartmentComplaint.user_id == Users.user_id)
                                  .filter(Users.apartment_id == apartment_id, DepartmentComplaint.status == 0)
@@ -285,10 +284,41 @@ def resolve_department_complaint(complaint_id):
     return redirect(url_for('view_department_complaints'))
 
 
+@app.route('/admin/view_departments', methods=['GET'])
+def view_departments():
+    if 'admin_id' in session:
+        apartment_id = session.get('admin_apartment_id')
+        departments = Department.query.filter_by(apartment_id=apartment_id).all()
+        return render_template('view_departments.html', departments=departments)
+    return redirect(url_for('admin_login'))
+
+@app.route('/admin/add_department', methods=['GET', 'POST'])
+def add_department():
+    if 'admin_id' in session:
+        if request.method == 'POST':
+            department_name = request.form['department_name']
+            email = request.form['email']
+            apartment_id = session.get('admin_apartment_id')
+
+            new_department = Department(
+                apartment_id=apartment_id,
+                department_name=department_name,
+                email=email
+            )
+
+            db.session.add(new_department)
+            db.session.commit()
+
+            return redirect(url_for('view_departments'))
+
+        return render_template('add_department.html')
+    return redirect(url_for('admin_login'))
+
+
+
 #provider routes
 public_key="pk_test_51PNeFpP65uOQnXwlT6Mscw8mNhequpRd7yIDQRCenPWCnyR7ZqVmmPFzLnqnEdbCdz0Nmb2hdge8pUJ8s6Laevcy00EsVjvCvO"
 stripe.api_key="sk_test_51PNeFpP65uOQnXwl0Fv0dEH33o2GN1IVmbePHZ0ImGutSXax3YZHPmZI3f4W6VlvaRMxzgv4eJVkOdWlfN0HQ3iq00Uhkhcnzd"
-
 
 
 @app.route('/add_apartment', methods=['POST', 'GET'])
@@ -335,7 +365,6 @@ def add_apartment():
         #     return redirect(url_for('error'))
 
     return render_template('add_apartment.html',public_key=public_key)
-
 
 
 @app.route('/register_admin', methods=['GET', 'POST'])

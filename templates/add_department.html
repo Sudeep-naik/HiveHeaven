@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Department</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding-bottom: 100px; /* Added padding bottom equal to footer height */
+        }
+
+        /* Header Styles */
+        .header {
+            padding: 10px;
+            background-color: #168db0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title h1 {
+            font-family: "Times New Roman", Times, serif;
+            color: white;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li a {
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.89);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: white;
+        }
+
+        /* Main Content Styles */
+        .main-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: #168db0;
+            box-shadow: 0 0 8px rgba(22, 141, 176, 0.3);
+            outline: none;
+        }
+
+        input[type="submit"] {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2ecc71;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #27ae60;
+        }
+
+        input[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: black;
+            color: white;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 999; /* Added z-index */
+        }
+
+        .list a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.849);
+            padding: 8px;
+            margin: 10px;
+        }
+
+        .list a:hover {
+            color: white;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding: 30px 18px;
+            margin: 0px;
+            background-color: rgb(26, 25, 25);
+        }
+
+        .copyright {
+            padding: 14px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="title">
+            <h1>HiveHaven</h1>
+        </div>
+        <nav class="navigation">
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Services</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <h1>Add Department</h1>
+        <form action="{{ url_for('add_department') }}" method="POST">
+            <div class="form-group">
+                <label for="department_name">Department Name</label>
+                <input type="text" id="department_name" name="department_name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <input type="submit" value="Add Department">
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="social">
+            <div class="list">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Thread</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Copyright © 2023 Title. All rights reserved</p>
+        </div>
+    </footer>
+</body>
+</html>
