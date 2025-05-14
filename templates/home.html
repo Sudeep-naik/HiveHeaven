@@ -301,18 +301,17 @@
                     </thead>
                     <tbody>
                         {% for complaint in personal_complaints %}
+                        {% if complaint.status==0 %}
+                            
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ complaint.id }}</td>
                             <td>{{ complaint.neighbor_user_id }}</td>
                             <td>{{ complaint.subject }}</td>
                             <td>{{ complaint.description }}</td>
-                            {% if complaint.status==0 %}
                             <td style="color: red;">Pending</td>
-                            {% else %}
-                            <td style="color: green;">Resolved</td>
-                            {% endif %}
                         </tr>
+                        {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -340,18 +339,16 @@
                     </thead>
                     <tbody>
                         {% for complaint in department_complaints %}
+                        {% if complaint.status==0 %} 
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ complaint.id }}</td>
                             <td>{{ complaint.department_id }}</td>
                             <td>{{ complaint.subject }}</td>
                             <td>{{ complaint.description }}</td>
-                            {% if complaint.status==0 %}
                             <td style="color: red;">Pending</td>
-                            {% else %}
-                            <td style="color: green;">Resolved</td>
-                            {% endif %}
                         </tr>
+                        {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -394,6 +391,85 @@
                 </tbody>
             </table>
             {% endif %}
+        </div>
+        <div class="mycomplaint box">
+            <div class="Sub-heading ">
+                <h1>Resolved Complaints</h1>
+            </div>
+           
+            <div class="personal-complaint">
+                <div class="complaint-bar">
+                    <h2>Personal Complaints</h2>
+                </div>
+                
+                {% if personal_complaints|length == 0 %}
+                <div class="alert-message">No Complaints Registered</div>
+                {% else %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Complaint ID</th>
+                            <th>Complaint On</th>
+                            <th>Subject</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaint in personal_complaints %}
+                        {% if complaint.status==1 %}
+                            
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ complaint.id }}</td>
+                            <td>{{ complaint.neighbor_user_id }}</td>
+                            <td>{{ complaint.subject }}</td>
+                            <td>{{ complaint.description }}</td>
+                            <td style="color: rgb(17, 191, 81);">Resolved</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+            <div class="department-complaint">
+                <div class="complaint-bar">
+                    <h2>Department Complaint</h2>
+                </div>
+                {% if department_complaints|length == 0 %}
+                <div class="alert-message">No Complaints Registered</div>
+                {% else %}
+                <h2>Complaints On Departments</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Complaint ID</th>
+                             <th>Department_id</th>
+                            <th>Subject</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaint in department_complaints %}
+                        {% if complaint.status==1 %} 
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ complaint.id }}</td>
+                            <td>{{ complaint.department_id }}</td>
+                            <td>{{ complaint.subject }}</td>
+                            <td>{{ complaint.description }}</td>
+                            <td style="color: rgb(17, 191, 81);">Resolved</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
         </div>
     </main>
 

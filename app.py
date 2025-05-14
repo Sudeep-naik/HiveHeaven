@@ -120,18 +120,17 @@ def register():
             db.session.add(user)
             db.session.commit() 
             sucess="Registered Sucessfull Please login"
-            return render_template('./register.html',sucess=sucess,all_apartments=all_apartments)
+            return render_template('./register.html',sucess=sucess,all_apartments=all_apartments,user_id=user_id)
 
-    
     return render_template('./register.html',all_apartments=all_apartments)
-
 
 @app.route('/login',methods=['GET','POST'])
 def login():
     if request.method=='POST':
         email=request.form['email']
+        user_id=request.form['user_id']
         password=request.form['password']
-        user=Users.query.filter_by(email=email).first()
+        user=Users.query.filter_by(user_id=user_id).first()
 
         if user and user.check_password(password):
             print("valid")
@@ -203,7 +202,9 @@ def department_complaint():
 
 @app.route('/logout')
 def logout():
-    session.clear()
+    del session["user_id"]
+    del session['email']
+    del session['apartment_id']
     return render_template('index.html')
 
 
@@ -315,10 +316,16 @@ def add_department():
     return redirect(url_for('admin_login'))
 
 
+@app.route('/admin/logout')
+def admin_logout():
+    del session["admin_id"]
+    del session['admin_apartment_id']
+    return render_template('index.html')
+
 
 #provider routes
-public_key="pk_test_51PNeFpP65uOQnXwlT6Mscw8mNhequpRd7yIDQRCenPWCnyR7ZqVmmPFzLnqnEdbCdz0Nmb2hdge8pUJ8s6Laevcy00EsVjvCvO"
-stripe.api_key="sk_test_51PNeFpP65uOQnXwl0Fv0dEH33o2GN1IVmbePHZ0ImGutSXax3YZHPmZI3f4W6VlvaRMxzgv4eJVkOdWlfN0HQ3iq00Uhkhcnzd"
+public_key=""
+stripe.api_key=""
 
 
 @app.route('/add_apartment', methods=['POST', 'GET'])
@@ -391,7 +398,7 @@ def register_admin():
             db.session.add(admin)
             db.session.commit()
             success = "Admin registered successfully"
-            return render_template("admin_login.html")
+            return render_template("sucess.html",apartment_id=apartment_id)
 
     return render_template('./register_admin.html', all_apartments=all_apartments, selected_apartment_id=apartment_id)
 
